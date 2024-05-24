@@ -1,13 +1,17 @@
 import {atom, selector} from "recoil";
+import axios from "axios";
 
+
+// asyncronous  data queries 
 export const notificationsAtom=atom({
     key:"networking",
-    default:{
-        network:6,
-        jobs:4,
-        messaging:6,
-        notifications:12
-    }
+    default: selector({
+        key:"networkAtomSelector",
+        get:async()=>{
+            const res=await axios.get("https://sum-server.100xdevs.com/notifications");
+            return res.data;
+        }
+    })
 });
 
 export const totalNotificationAtomSelector=selector({
